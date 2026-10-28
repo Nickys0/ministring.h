@@ -160,7 +160,7 @@ int main(void) {
 
     ms_strcpy_c(&s, "Hello World");
 
-    // From now on you can use <s> as it use a normal char*
+    // From now on you can use <s> as it was a normal char*
     for(size_t i = 0; i < ms_len(s); ++i) {
         fprintf(stderr, "s[%zu]: %c\n", i, s[i]);
     }
