@@ -1,0 +1,2 @@
+-DMS_IMPLEMENTATION
+-std=c11
