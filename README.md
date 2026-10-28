@@ -52,3 +52,17 @@ To complately disable certain aspect of the library
 #define MS_NO_ASSERT          // If defined disables default assertions
 #define MS_NO_DEFAULT_ZEROED  // If defined disables the defualt memset to 0 when allocating a new mstring
 ```
+
+## How to run tests
+To run tests under ./tests just compile run_tests like this:
+```bash
+gcc -o tester run_tests.c -Wall -Wextra
+```
+and then run it:
+```bash
+./tester
+```
+(If you are on Windows you may need to use a different compiler)
+
+## Compatibility 
+The library is tested on Linux and it should work also on Windows but it is not tested yet.
