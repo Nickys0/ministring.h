@@ -31,8 +31,7 @@ int main(void) {
 
 ## How to use the library in your own project
 
-The only file you need from here is [ministring.h](https://github.com/Nickys0/ministring.h/blob/main/ministring.h). Just copy-paste it to your project and start using it
-
+The only file you need from here is [ministring.h](https://github.com/Nickys0/ministring.h/blob/main/ministring.h). Just copy-paste it to your project and start using it.
 Aftery copy-paste just include "ministring.h" in your project and define MS_IMPLEMENTATION to include the implementation.
 
 ## Configuration
@@ -40,6 +39,7 @@ Aftery copy-paste just include "ministring.h" in your project and define MS_IMPL
 The library lets you define some MACROS before including the library to change its behaviour:
 
 You can define this to use different allocators/assertions which are compatible with the libc related functions
+
 ```c
 #define MS_ASSERT(expr) // (default to libc's assert macro)
 #define MS_MALLOC(nbytes) // (default to libc's malloc function)

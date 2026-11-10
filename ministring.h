@@ -309,8 +309,7 @@ mstring ms_strcatvf(mstring* ms, cstring cs, va_list va) {
     va_list list;
     va_copy(list, va);
 
-    // @TEST: Test if we can safely pass sizeof()
-    char buffer[16] = {0};
+    char buffer[4096] = {0};
     int n = vsnprintf(buffer, sizeof(buffer), cs, list);
 
     if(n < 0 || n > (int)(sizeof(buffer))) {
