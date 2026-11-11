@@ -9,12 +9,7 @@ This library is inspired from the [sds](https://github.com/antirez/sds) library 
 #include <string.h>
 
 int main(void) {
-#if 1
     mstring s = ms_new(); // empty string (16-bytes)
-#else
-    // which is the same as
-    char* s = ms_new();
-#endif
 
     ms_strcpy_c(&s, "Hello World");
 
@@ -54,14 +49,12 @@ To complately disable certain aspect of the library
 ```
 
 ## How to run tests
-To run tests under ./tests just compile run_tests like this:
+To run tests under ./tests just compile and run run_tests like this:
 ```bash
 gcc -o tester run_tests.c -Wall -Wextra
-```
-and then run it:
-```bash
 ./tester
 ```
+
 (If you are on Windows you may need to use a different compiler)
 
 ## Compatibility 

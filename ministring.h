@@ -1,5 +1,5 @@
 /*
-    ministring.h - v0.1.0 - MIT
+    ministring.h - v0.1.1-dev - MIT
 
     MINISTRING LIBRARY (STB-STYLE)
 
@@ -28,7 +28,7 @@
         - #define MS_REALLOC        (default to libc)
         - #define MS_FREE           (default to libc)
 
-        ! MS_MALLOC, MS_REALLOC, MS_FREE must be defined together!
+        ! MS_MALLOC, MS_REALLOC, MS_FREE must be defined together !
 
    --------------------------------------------------------------------------------
    LICENSE: MIT
@@ -151,12 +151,7 @@ void ms_free(mstring* ms);
 #include <string.h>
 
 int main(void) {
-#if 1
     mstring s = ms_new(); // empty string (16-bytes)
-#else
-    // which is the same as
-    char* s = ms_new();
-#endif
 
     ms_strcpy_c(&s, "Hello World");
 
@@ -184,6 +179,8 @@ int main(void) {
 #include <stdint.h> // uintptr_t
 
 #define MULTIPLE_OF(bytes) (bytes + (sizeof(uintptr_t) - 1)) & ~(sizeof(uintptr_t) - 1)
+
+#define __BUFFER_SIZE 4096
 
 // Makes enough room so that (<ms>.len + nbytes) < <ms>.size
 static void ms__make_room_for(mstring* ms, size_t nbytes) {
@@ -309,7 +306,7 @@ mstring ms_strcatvf(mstring* ms, cstring cs, va_list va) {
     va_list list;
     va_copy(list, va);
 
-    char buffer[4096] = {0};
+    char buffer[__BUFFER_SIZE] = {0};
     int n = vsnprintf(buffer, sizeof(buffer), cs, list);
 
     if(n < 0 || n > (int)(sizeof(buffer))) {
@@ -343,12 +340,15 @@ void ms_free(mstring* ms) {
     MS_FREE(ms_get_header(*ms));
     *ms = NULL;
 }
+
+#undef __BUFFER_SIZE
 #endif
 
 /*
     Revision history:
 
-    0.1.0 [2026-10-28] First minor release
+    0.1.1-dev   [2026-11-11] Some internal changes/patches
+    0.1.0       [2026-10-28] First minor release
 
     We are following https://semver.org/ so the version has a format MAJOR.MINOR.PATCH:
       - Modifying comments does not update the version.
