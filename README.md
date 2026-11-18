@@ -17,7 +17,7 @@ This library is inspired from the [sds](https://github.com/antirez/sds) library 
 int main(void) {
     mstring s = ms_new(); // empty string (16-bytes)
 
-    ms_strcpy_c(&s, "Hello World");
+    ms_strcpy_l(&s, "Hello World");
 
     // From now on you can use <s> as it was a normal char*
     for(size_t i = 0; i < ms_len(s); ++i) {

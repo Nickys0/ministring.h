@@ -1,5 +1,5 @@
 /*
- *  ministring.h - v0.2.0 - MIT
+ *  ministring.h - v0.2.1 - MIT
 
     MINISTRING LIBRARY (STB-STYLE)
 
@@ -216,13 +216,15 @@ static void ms__make_room_for(mstring* ms /* NON-NULL */, size_t nelem, bool zer
     const size_t new_len = ms_len(*ms) + nelem + 1;
 
     if(new_len >= ms_cap(*ms)) {
-        const size_t new_size = ((ms_len(*ms) + new_len)) * 2;
-        const size_t size_of = (sizeof(struct ministring_header) + new_size);
 
-        struct ministring_header* h = MS_REALLOC(ms_get_header(*ms), MULTIPLE_OF(size_of));
+        // @TODO: we should do this better
+        const size_t new_size = MULTIPLE_OF((ms_len(*ms) + new_len));
+        const size_t tot_size = (sizeof(struct ministring_header) + new_size);
+
+        struct ministring_header* h = MS_REALLOC(ms_get_header(*ms), tot_size);
         MS_ASSERT(h != NULL);
-        h->size = new_size;
 
+        h->size = new_size;
         *ms = h->buffer;
 
         // we init all the newly allocated space
@@ -369,6 +371,8 @@ void ms_free(mstring* ms) {
  !  IMPORTANT: UNTIL RELEASE 1.0.0 WE DO NOT GARANTEE BACKWARD COMPATABILITY
                AS THIS ARE STILL AN UNSTABLE API
 
+    0.2.1   [2026-11-19] Some small fixes
+    
     0.2.0   [2026-11-18] Fixes on how the size and lenght were calculated
                         (+) 'ms_strcpy_l'      (wrapper of 'ms_strcpy')
                         (+) 'ms_strcat_l'      (wrapper of 'ms_strcat')
