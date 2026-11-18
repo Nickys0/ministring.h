@@ -47,7 +47,9 @@ typedef struct string_view {
 #define WHITE       "\x1b[0;37m"
 #define COLOR_RESET "\x1b[0m" //Reset
 
-#define HEADER_COLOR YELLOW
+#define HEADER_COLOR        YELLOW
+#define HEADER_COLOR_SUCC   GREEN
+#define HEADER_COLOR_FAIL   RED
 
 #define SVLIT(literal) (string_view){ .items = (literal), .len = (sizeof((literal)) - 1) }
 #define SV(it, l) (string_view){ .items = (it), .len = (l) }
@@ -183,13 +185,23 @@ int run_test(size_t index) {
         defer_with_value(FAIL);
     }
 
-    print_colored_section(HEADER_COLOR, {
-        fprintf(stdout, "\n");
-        fprintf(stdout, "===========================================================================\n");
-        fprintf(stdout, "=== END TEST '%s' (%s)\n", test_files[index], r != 0? "FAILED" : "OK");
-        fprintf(stdout, "===========================================================================\n");
-        fprintf(stdout, "\n");
-    });
+    if(r == 0) {
+        print_colored_section(HEADER_COLOR_SUCC, {
+            fprintf(stdout, "\n");
+            fprintf(stdout, "===========================================================================\n");
+            fprintf(stdout, "=== END TEST '%s' (SUCCESS)\n", test_files[index]);
+            fprintf(stdout, "===========================================================================\n");
+            fprintf(stdout, "\n");
+        });
+    } else {
+        print_colored_section(HEADER_COLOR_FAIL, {
+            fprintf(stdout, "\n");
+            fprintf(stdout, "===========================================================================\n");
+            fprintf(stdout, "=== END TEST '%s' (FAIL)\n", test_files[index]);
+            fprintf(stdout, "===========================================================================\n");
+            fprintf(stdout, "\n");
+        });
+    }
 
 
 defer:

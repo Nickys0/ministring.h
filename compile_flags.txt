@@ -1,2 +1,5 @@
 -DMS_IMPLEMENTATION
 -std=c11
+-Wall
+-Wextra
+-Wno-unused-includes

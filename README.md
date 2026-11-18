@@ -1,6 +1,12 @@
 # ministring.h - A simple C-compatible dynamic string library
 This library is inspired from the [sds](https://github.com/antirez/sds) library by @antirez
 
+
+> [!WARNING]
+> UNTIL RELEASE 1.0.0 WE DO NOT GARANTEE BACKWARD COMPATABILITY AS THIS ARE STILL 
+> UNSTABLE API
+
+
 ## Basic example
 ```c
 #define MS_IMPLEMENTATION
@@ -45,13 +51,14 @@ You can define this to use different allocators/assertions which are compatible 
 To complately disable certain aspect of the library
 ```c
 #define MS_NO_ASSERT          // If defined disables default assertions
-#define MS_NO_DEFAULT_ZEROED  // If defined disables the defualt memset to 0 when allocating a new mstring
+#define MS_NO_DEFAULT_ZEROED  // If defined disables the defualt memset to 0 when allocating/reallocating a new mstring
 ```
 
 ## How to run tests
 To run tests under ./tests just compile and run run_tests like this:
 ```bash
 gcc -o tester run_tests.c -Wall -Wextra
+
 ./tester
 ```
 

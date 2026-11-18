@@ -5,26 +5,10 @@
 /// COMMAND: cc -std=c99 -Wall -Wextra -ggdb -DMS_IMPLEMENTATION -o minitest minitest.c -fsanitize=address
 ///
 #include "../ministring.h"
-#include <stdio.h>
-#include <signal.h>
 
-#define string_info(ms)                                             \
-        do{                                                         \
-            fprintf(stderr, "string:\n");                           \
-            fprintf(stderr, "  \\_ len:   %zu\n", ms_len(ms));      \
-            fprintf(stderr, "  \\_ size:  %zu\n", ms_size(ms));     \
-            fprintf(stderr, "  \\_ avail: %zu\n", ms_avail(ms));    \
-            fprintf(stderr, "  \\_ cont:  '%s'\n",  ms);            \
-        } while(0)
+#include "common.h"
 
-static size_t sec_n = 0;
-
-#define SECTION(header)\
-        do{                                                                             \
-            fprintf(stderr, "\n");                                                      \
-            fprintf(stderr, " -- SECTION(%zu) '%s' ----------\n", sec_n++, header);    \
-            fprintf(stderr, "\n");                                                      \
-        } while(0)
+size_t sec_n = 0;
 
 void signal_handler(int signal) {
     if(signal == SIGSEGV) {
@@ -40,9 +24,9 @@ int main(void) {
     signal(SIGSEGV, signal_handler);
     signal(SIGABRT, signal_handler);
 
-    mstring s1 = ms_new( /* Empty string: 16bytes */ );
+    mstring s1 = ms_new();
     mstring s2 = ms_new_len(32);
-    mstring s3 = ms_init("Hello there!", 12);
+    mstring s3 = ms_new_from_l("Hello there!");
 
     SECTION("INIT");
     string_info(s1);
